@@ -239,8 +239,6 @@ def parse_args() -> Tuple[argparse.Namespace, List[str]]:
 	parser.add_argument('--reload', '-r', default=False, action="store_true",
 		help="(DEPRECATED: Is now default) Set this flag to reload all the data after a radiation-induced error.")
 	parser.add_argument('--vit', '-v', '--notokens', '-nt', default=False, action="store_true", help="Set this flag to use ViT/models without token inputs.")
-	parser.add_argument('--noreload', default=False, action="store_true",
-		help="Set this flag to DISABLE reloading all the data after a radiation-induced error (not recommended).")
 	parser.add_argument('--log_interval', default=int(10),
 		help="Interval (in iterations) for the DUT to send performance logs to server. This does not affect error logging.")
 
@@ -291,13 +289,6 @@ def main():
 
 	max_iterations = args.iterations
 	compute_golden = args.generate
-
-	reload_on_error = not args.noreload
-
-	if not reload_on_error:
-		logger.warning(f"reload_data:False")
-		if terminal_logger:
-			terminal_logger.warning(f"You have DISABLED reloading the data after a radiation-induced error.")
 
 	use_tokens = not args.vit
 
@@ -364,9 +355,9 @@ def main():
 			compare_time = None
 
 			if not compute_golden:
-				sim_error = False
-				if sim_error and it == 3:
-					output[0][1] += 10
+				#sim_error = False
+				#if sim_error and it == 3:
+				#	output[0][1] += 10
 
 				timer.tic()
 				err = compare_output(output, golden[img_index], img_index, logger, terminal_logger)
@@ -380,7 +371,7 @@ def main():
 
 			del output
 
-			if err and reload_on_error:
+			if err:
 				iter_err_count += 1
 				# this should never happen
 				if compute_golden:
