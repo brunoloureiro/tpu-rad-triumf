@@ -6,7 +6,7 @@ This setup is meant to be used on a host with Ubuntu 22.04 and the Coral EdgeTPU
 
 With a Raspberry Pi 4 host, the easiest way is to download the following image and clone it into your Raspberry's SD card.
 
-- link here
+- https://drive.google.com/file/d/1L-MKph_MsSxnJEZnNCKUhcrTgHz8jUcJ/view?usp=sharing
 
 **Note: The current image is missing some model/input files and has slightly outdated code. You can use the bash scripts provided to copy the files into the DUT (if you use a different IP, simply replace the IP in the script file).**
 
