@@ -50,7 +50,7 @@ The main script used to run benchmarks is `run_model.py`. For a complete list of
 - \-\-log_interval: number of iterations between logging performance metrics. Ideally, this number should be configured so the benchmark sends roughly one log per second to the server. Simpler/faster benchmarks should set higher numbers to avoid flooding the network.
 - \-\-enable_console (\-log): this flag enables printing to the console. Useful for debugging, but should not be set during real experiments to reduce overhead.
 
-**In general, you should not have to run commands manually.** Instead, the server (https://github.com/brunoloureiro/tpu-rad-triumf/server/) should automatically run these commands. An example of a command that the server will run is:
+**In general, you should not have to run commands manually.** Instead, the server (https://github.com/brunoloureiro/tpu-rad-triumf/tree/main/server/) should automatically run these commands. An example of a command that the server will run is:
 
 `/home/carol/tpu-rad/run_model.py -m /home/carol/tpu-rad/models/vit16_im64_ps8_proj256_nlayers3_nheads16_mlphead256_MHA_FROM_START_edgetpu.tflite -i /home/carol/tpu-rad/inputs/vit_base_16_images.npy -g /home/carol/tpu-rad/golden/vit_base_16_golden_MHA_from_image.npy --vit -n 32 --log_interval 20`
 
