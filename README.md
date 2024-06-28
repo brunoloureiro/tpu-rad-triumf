@@ -1,46 +1,27 @@
 # Setup for Evaluation of Coral EdgeTPUs with Radiation Experiments
 
+This repository contains scripts to perform radiation experiments with the Coral EdgeTPU. The server code is a fork of RadHelper's radiation setup (https://github.com/radhelper/radiation-setup), while the DUT code uses libLogHelper (https://github.com/radhelper/libLogHelper).
+
 ## Getting Started
 
-This setup is meant to be used on a host with Ubuntu 22.04 and the Coral EdgeTPU.
+Before doing anything else, I recommend reading the documentation for the server (https://github.com/brunoloureiro/tpu-rad-triumf/server/README.md) and for the DUTs (https://github.com/brunoloureiro/tpu-rad-triumf/tpu/README.md).
 
-With a Raspberry Pi 4 host, the easiest way is to download the following image and clone it into your Raspberry's SD card.
+Some reminders before setting things up: keep the DUTs in an internal network, do not connect it to an external network (DHCP server). For each DUT, you must re-configure the static IP and the server port (details in the DUT documentation at https://github.com/brunoloureiro/tpu-rad-triumf/tpu/README.md).
 
-- link here
+### Before the Experiment
 
-**Note: The current image is missing some model/input files and has slightly outdated code. You can use the bash scripts provided to copy the files into the DUT (if you use a different IP, simply replace the IP in the script file).**
+Before starting the experiment, we recommend creating a spreadsheet with the configuration of each DUT, including IP, server port, and power switch port. At first, it might be easier to set up a single DUT and checking everything works.
 
-### Manual Installation
+### During the Experiment
 
-For manual installation, follow the guides for each dependency. Some of these include:
+Thanks to ~~magic~~ Fernando (and many other collaborators), the server should handle *most* things (if configured properly), so you should just run `./server.py` in the host responsible for the server (the server should not be in the beam room).
 
-- libLogHelper
-	- https://github.com/radhelper/libLogHelper
-- Coral Software
-	- https://coral.ai/docs/accelerator/get-started/
-	- https://coral.ai/software/
-	- https://github.com/prbodmann/Coral-TPU/tree/main/elementary-ops
+However, you may at times wish to change the benchmark running on each DUT (or you want to add, remove, or replace DUTs). In this case, you can stop the server (control + C) and manually edit some configuration files (detailed in the server documentation at https://github.com/brunoloureiro/tpu-rad-triumf/server/README.md).
 
-## Running a Benchmark
+First thing to notice: when you do this, the **DUTs keep running the benchmarks**. We suggest manually turning off the power switches and/or connecting to each DUT via SSH and running `sudo shutdown -h now` (you can also run `sudo pkill -9 -f run_model.py` to kill the benchmark without turning the DUT off). Hopefully this will be improved in the future (if you want to help, see: https://github.com/radhelper/radiation-setup/issues/4).
 
-The main script used to run benchmarks is `run_model.py`. For a complete list of arguments, run `./run_model.py --help`. Some common (and important) arguments include:
+Next, you must edit the relevant files (which you obviously remember from the DUT documentation at https://github.com/brunoloureiro/tpu-rad-triumf/tpu/README.md):
 
-- **\-\-vit: this flag MUST be enabled when using the ViT model (which you should be)**
-- \-\-model (\-m): path for the .tflite file containing the EdgeTPU model
-- \-\-inputs (\-i): path for the file containing the inputs (.npy file preferred)
-- \-\-golden (\-g): path for the file containing the golden file (.npy file preferred)
-- \-\-testsamples (\-n): number of images to use. Each image should be one position of the array loaded from the inputs file passed above.
-- \-\-generate (\-gen): use this flag to generate the golden. Only needs to be done once per input (this repo already includes the golden for the inputs provided).
-- \-\-log_interval: number of iterations between logging performance metrics. Ideally, this number should be configured so the benchmark sends roughly one log per second to the server. Simpler/faster benchmarks should set higher numbers to avoid flooding the network.
-- \-\-enable_console (\-log): this flag enables printing to the console. Useful for debugging, but should not be set during real experiments to reduce overhead.
+- To enable/disable a machine, edit `server_parameters.yaml`
 
-**In general, you should not have to run commands manually.** Instead, the server (https://github.com/brunoloureiro/rad-setup-tpu) should automatically run these commands. An example of a command that the server will run is:
-
-`/home/carol/tpu-rad/run_model.py -m /home/carol/tpu-rad/models/vit16_im64_ps8_proj256_nlayers3_nheads16_mlphead256_MHA_FROM_START_edgetpu.tflite -i /home/carol/tpu-rad/inputs/vit_base_16_images.npy -g /home/carol/tpu-rad/golden/vit_base_16_golden_MHA_from_image.npy --vit -n 32 --log_interval 20`
-
-As you can see, the commands can get quite lengthy, especially with absolute paths (which are preferred). This is why you should use the server to run them!
-
-- Server
-	- https://github.com/radhelper/radiation-setup
-- Fork with some configuration files
-	- https://github.com/brunoloureiro/rad-setup-tpu
+- To change the benchmark of a machine, edit `machines_cfgs/rasp4coral.yaml` (for the first Rasp, `rasp4coral2.yaml` for the next, and so on). Again, we recommend **commenting out everything *EXCEPT* the benchmark you want to run.**
