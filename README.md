@@ -21,7 +21,17 @@ Thanks to ~~magic~~ Fernando (and many other collaborators), the server should h
 
 However, you may at times wish to change the benchmark running on each DUT (or you want to add, remove, or replace DUTs). In this case, you can stop the server (control + C) and manually edit some configuration files (detailed in the server documentation at https://github.com/brunoloureiro/tpu-rad-triumf/tree/main/server/README.md).
 
-First thing to notice: when you do this, the **DUTs keep running the benchmarks**. We suggest manually turning off the power switches and/or connecting to each DUT via SSH and running `sudo shutdown -h now` (you can also run `sudo pkill -9 -f run_model.py` to kill the benchmark without turning the DUT off). Hopefully this will be improved in the future (if you want to help, see: https://github.com/radhelper/radiation-setup/issues/4).
+### Stopping DUTs
+
+First thing to notice: when you do this, the **DUTs keep running the benchmarks**. We suggest:
+
+- manually turning off the power switches
+- and/or connecting to each DUT via SSH and running `sudo shutdown -h now`
+	- (you can also run `sudo pkill -9 -f run_model.py` to kill the benchmark without turning the DUT off).
+
+Hopefully this will be improved in the future (if you want to help, see: https://github.com/radhelper/radiation-setup/issues/4).
+
+### Changing Benchmarks
 
 Next, you must edit the relevant files (which you obviously remember from the DUT documentation at https://github.com/brunoloureiro/tpu-rad-triumf/tree/main/tpu/README.md):
 
