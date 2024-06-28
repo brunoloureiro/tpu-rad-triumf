@@ -21,6 +21,13 @@ from common_tpu import *
 
 import log_helper as lh
 
+import threading
+import time
+import os
+import sys
+import inspect
+import traceback
+
 def copy_tf_tensor(tensor):
 	try:
 		np_array = tensor.numpy()
@@ -29,12 +36,29 @@ def copy_tf_tensor(tensor):
 
 	return np.copy(np_array)
 
+def log_and_crash(fatal_string: str) -> None:
+	caller_frame_record = inspect.stack()[1]  # 0 represents this line
+	# 1 represents line at caller
+	frame = caller_frame_record[0]
+	info = inspect.getframeinfo(frame)
+	fatal_log_string = f"SETUP_ERROR:{fatal_string} FILE:{info.filename}:{info.lineno} F:{info.function}"
+	fatal_log_string += f"\nTRACEBACK:{traceback.format_exc()}"
+	# It is better to always show the exception to stdout
+	print(fatal_log_string)
+	lh.log_info_detail(info_detail=fatal_log_string)
+	# Also save to tmp in the case of logging is not active
+	with open(Path('/tmp/')/'TMP_CRASH_FILE', "w") as tmp_fp:
+		tmp_fp.write(f"{fatal_log_string}\n")
+	lh.end_log_file()
+	sys.exit(1)
+
 def start_setup_log_file(
 	framework_name: str,
 	framework_version: str,
 	device: str,
 	model_name: str,
 	args_conf: list,
+	log_interval: int,
 ) -> None:
 	log_header = f"framework:{framework_name} framework_version:{framework_version} Device:{device}"
 	log_header += " ".join(args_conf)
@@ -42,8 +66,7 @@ def start_setup_log_file(
 	lh.start_log_file(bench_name, log_header)
 	lh.set_max_errors_iter(1024*9)
 	lh.set_max_infos_iter(512)
-	interval_print = 10
-	lh.set_iter_interval_print(interval_print)
+	lh.set_iter_interval_print(int(log_interval))
 
 
 class LHLogger():
@@ -218,7 +241,8 @@ def parse_args() -> Tuple[argparse.Namespace, List[str]]:
 	parser.add_argument('--vit', '-v', '--notokens', '-nt', default=False, action="store_true", help="Set this flag to use ViT/models without token inputs.")
 	parser.add_argument('--noreload', default=False, action="store_true",
 		help="Set this flag to DISABLE reloading all the data after a radiation-induced error (not recommended).")
-	
+	parser.add_argument('--log_interval', default=int(10),
+		help="Interval (in iterations) for the DUT to send performance logs to server. This does not affect error logging.")
 
 	args = parser.parse_args()
 
@@ -251,6 +275,7 @@ def main():
 		device='EdgeTPU',
 		model_name=model_name,
 		args_conf=formatted_args,
+		log_interval=args.log_interval,
 	)
 
 	if terminal_logger is not None:
@@ -435,5 +460,5 @@ if __name__ == '__main__':
 	try:
 		main()
 	except Exception as main_function_exception:
-		#dnn_log_helper.log_and_crash(fatal_string=f"EXCEPTION:{main_function_exception}")
-		raise main_function_exception
+		log_and_crash(fatal_string=f"EXCEPTION:{main_function_exception}")
+		#raise main_function_exception
