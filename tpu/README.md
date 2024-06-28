@@ -23,7 +23,7 @@ For manual installation, follow the guides for each dependency. Some of these in
 
 ## Configuring the DUT
 
-After cloning the SD and updating the files with the scripts (e.g., `scp_24.py`), you may need to reconfigure the DUT to have the correct IP and use the correct server port.
+After cloning the SD and updating the files with the scripts (e.g., `scp_25.py`), you may need to reconfigure the DUT to have the correct IP and use the correct server port.
 
 ### DUT IP
 
