@@ -10,23 +10,7 @@ With a Raspberry Pi 4 host, the easiest way is to download the following image a
 
 **Note: The current image is missing some model/input files and has slightly outdated code. You can use the bash scripts provided to copy the files into the DUT (if you use a different IP, simply replace the IP in the script file).**
 
-### Configuring the DUT
-
-After cloning the SD and updating the files with the scripts (e.g., `scp_24.py`), you may need to reconfigure the DUT to have the correct IP and use the correct server port.
-
-#### DUT IP
-
-Configuring a static IP for the Raspberry Pi 4 was actually a bit annoying. The easiest way is to use the GUI, but this was disabled in our installation (for performance reasons). Currently, the static IP is configured in `~/.atBoot.sh` (edit this as sudo). This value should be unique for each DUT and must match the configuration of the machines in the server. **Important: the DUT should NOT be connected to an external network, i.e., do not connect it to a DCP server, or the IP will be reset.** There are probably better ways to go about this, but this worked in our experiments.
-
-To change the IP, edit the file as sudo (e.g., `sudo nano ~/.atBoot.sh`) and change the IP in `ifconfig eth0 <ip>`. Tip: number the IPs sequentially to make it easier to remember. In our experiments, the IP 192.168.1.**25** used the server port 1025 (explained next), making it easy to remember.
-
-#### Server Port
-
-The server port should be configured by changing the `/etc/radiation-benchmarks.conf` file. Note: you should run the text editor (e.g., nano) as sudo.
-
-The configuration should be relatively intuitive, but the most important values to change are `serverip` and `serverport`. The `serverip` should probably be the same for every DUT (unless you are using multiple servers), but each DUT should use an unique `serverport`. We usually number them sequentially, e.g., starting with 1024, 1025, and so on. **Important: these values MUST match the configuration in the server files.**
-
-## Manual Installation
+### Manual Installation
 
 For manual installation, follow the guides for each dependency. Some of these include:
 
@@ -36,6 +20,29 @@ For manual installation, follow the guides for each dependency. Some of these in
 	- https://coral.ai/docs/accelerator/get-started/
 	- https://coral.ai/software/
 	- https://github.com/prbodmann/Coral-TPU/tree/main/elementary-ops
+
+## Configuring the DUT
+
+After cloning the SD and updating the files with the scripts (e.g., `scp_24.py`), you may need to reconfigure the DUT to have the correct IP and use the correct server port.
+
+### DUT IP
+
+Configuring a static IP for the Raspberry Pi 4 was actually a bit annoying. The easiest way is to use the GUI, but this was disabled in our installation (for performance reasons). Currently, the static IP is configured in `~/.atBoot.sh` (edit this as sudo). This value should be unique for each DUT and must match the configuration of the machines in the server. **Important: the DUT should NOT be connected to an external network, i.e., do not connect it to a DCP server, or the IP will be reset.** There are probably better ways to go about this, but this worked in our experiments.
+
+#### Changing the DUT's IP
+
+To change the IP:
+
+- edit the file as sudo (e.g., `sudo nano ~/.atBoot.sh`) and
+- change the IP in `ifconfig eth0 <ip>`.
+
+Tip: number the IPs sequentially to make it easier to remember. In our experiments, the IP 192.168.1.**25** used the server port 1025 (explained next), making it easy to remember.
+
+### Server Port
+
+The server port should be configured by changing the `/etc/radiation-benchmarks.conf` file. Note: you should run the text editor (e.g., nano) as sudo.
+
+The configuration should be relatively intuitive, but the most important values to change are `serverip` and `serverport`. The `serverip` should probably be the same for every DUT (unless you are using multiple servers), but each DUT should use an unique `serverport`. We usually number them sequentially, e.g., starting with 1024, 1025, and so on. **Important: these values MUST match the configuration in the server files.**
 
 ## Running a Benchmark
 

@@ -6,13 +6,16 @@ This repository contains scripts to perform radiation experiments with the Coral
 
 Before doing anything else, I recommend reading the documentation for the server (https://github.com/brunoloureiro/tpu-rad-triumf/tree/main/server/README.md) and for the DUTs (https://github.com/brunoloureiro/tpu-rad-triumf/tree/main/tpu/README.md).
 
-Some reminders before setting things up: keep the DUTs in an internal network, do not connect it to an external network (DHCP server). For each DUT, you must re-configure the static IP and the server port (details in the DUT documentation at https://github.com/brunoloureiro/tpu-rad-triumf/tree/main/tpu/README.md).
+### Some reminders before setting things up
 
-### Before the Experiment
+- Keep the DUTs in an internal network, do not connect it to an external network (DHCP server).
+- For each DUT, you must re-configure the static IP and the server port (details in the DUT documentation at https://github.com/brunoloureiro/tpu-rad-triumf/tree/main/tpu/README.md).
 
-Before starting the experiment, we recommend creating a spreadsheet with the configuration of each DUT, including IP, server port, and power switch port. At first, it might be easier to set up a single DUT and checking everything works.
+## Before the Experiment
 
-### During the Experiment
+**Before starting the experiment, we recommend creating a spreadsheet with the configuration of each DUT, including IP, server port, and power switch port. At first, it might be easier to set up a single DUT and checking everything works.**
+
+## During the Experiment
 
 Thanks to ~~magic~~ Fernando (and many other collaborators), the server should handle *most* things (if configured properly), so you should just run `./server.py` in the host responsible for the server (the server should not be in the beam room).
 
