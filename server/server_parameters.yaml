@@ -23,9 +23,9 @@ machines: [
     "enabled": True, "cfg_file": "machines_cfgs/rasp4coral2.yaml"
   },
   {
-    "enabled": True, "cfg_file": "machines_cfgs/rasp4coral3.yaml"
+    "enabled": False, "cfg_file": "machines_cfgs/rasp4coral3.yaml"
   },
   {
-    "enabled": True, "cfg_file": "machines_cfgs/rasp4coral4.yaml"
+    "enabled": False, "cfg_file": "machines_cfgs/rasp4coral4.yaml"
   },
 ]
