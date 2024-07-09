@@ -95,12 +95,23 @@ def _common_switch_command(status: str, switch_ip: str, switch_port: int) -> Err
     :param switch_port: port to reboot
     :return: ErrorCodes enum
     """
-    port_default_cmd = 'pw%1dName=&P6%1d=%%s&P6%1d_TS=&P6%1d_TC=&' % (
-        switch_port, switch_port - 1, switch_port - 1, switch_port - 1)
+    port_default_cmd = ''
+    for i in range(1, switch_port+1):
+        if i == switch_port:
+            on_off_str = 'On' if status == __ON else 'Off'
+            port_default_cmd += f"pw{i}Name=&P6{i-1}={on_off_str}&P6{i-1}_TS=&P6{i-1}_TC=&"
+        else:
+            # TO-DO:
+            # keep track of each port's status
+            # (maybe use a class)
+
+            # lazy way for now is leaving it On (at least it won't turn off the DUT)
+            port_default_cmd += f"pw{i}Name=&P6{i-1}=On&P6{i-1}_TS=&P6{i-1}_TC=&"
 
     cmd = 'curl --data \"'
-    cmd += port_default_cmd % ("On" if status == __ON else "Off")
-    cmd += '&Apply=Apply\" '
+    #cmd += port_default_cmd % ("On" if status == __ON else "Off")
+    cmd += port_default_cmd
+    cmd += 'Apply=Apply\" '
     cmd += f'http://{switch_ip}/tgi/iocontrol.tgi -o /dev/null '
     # Execute the command
     tmp_file = "/tmp/server_error_execute_command"
