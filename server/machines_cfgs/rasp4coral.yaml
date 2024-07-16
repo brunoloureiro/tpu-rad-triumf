@@ -40,7 +40,8 @@ json_files: [
     #"/home/carol/radiation-setup/machines_cfgs/run_vit_base_8_edgetpu.json",
     #"/home/carol/radiation-setup/machines_cfgs/run_vit_base_16_edgetpu.json",
     #"/home/carol/radiation-setup/machines_cfgs/run_efficient_l3_edgetpu.json",
-    #"/home/carol/radiation-setup/machines_cfgs/run_dleit_fs_hs96_hl3_ah6_is192_im64_ps8_layeredheads_edgetpu.json",
+    #"/home/carol/radiation-setup/machines_cfgs/run_conv1k.json",
+    "/home/carol/radiation-setup/machines_cfgs/run_simple_conv1k.json",
     #"/home/carol/radiation-setup/machines_cfgs/run_mha_from_image_v8.json",
     #"/home/carol/radiation-setup/machines_cfgs/run_final_block_v8.json",
     #"/home/carol/radiation-setup/machines_cfgs/run_main_block_from_image_v8.json",
@@ -48,6 +49,6 @@ json_files: [
     #"/home/carol/radiation-setup/machines_cfgs/run_mha_from_image_v16.json",
     #"/home/carol/radiation-setup/machines_cfgs/run_final_block_v16.json",
     #"/home/carol/radiation-setup/machines_cfgs/run_main_block_from_image_v16.json",
-    "/home/carol/radiation-setup/machines_cfgs/run_patch_encoding_v16.json",
+    #"/home/carol/radiation-setup/machines_cfgs/run_patch_encoding_v16.json",
 
 ]

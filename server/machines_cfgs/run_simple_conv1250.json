@@ -1,0 +1,8 @@
+[
+  {
+    "killcmd": "sudo pkill -9 -f setup_heavy_ions.py",
+    "exec": "/home/carol/tpu-rad/setup_heavy_ions.py -m /home/carol/tpu-rad/models/simple_conv_2d_1_1250_1250_1_40_40_1_1_quant_edgetpu.tflite -i /home/carol/tpu-rad/inputs/input_simple_conv_2d_1_1250_1250_1_40_40_1_1.npy -g /home/carol/tpu-rad/golden/golden_simple_conv_2d_1_1250_1250_1_40_40_1_1.npy --vit -n 1",
+    "codename": "run_simple_conv1250",
+    "header": "--model simple_conv_2d_1_1250_1250_1_40_40_1_1_quant_edgetpu.tflite -n 1 --vit"
+  }
+]

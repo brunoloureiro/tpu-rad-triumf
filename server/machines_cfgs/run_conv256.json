@@ -1,0 +1,8 @@
+[
+  {
+    "killcmd": "sudo pkill -9 -f setup_heavy_ions.py",
+    "exec": "/home/carol/tpu-rad/setup_heavy_ions.py -m /home/carol/tpu-rad/models/depthwise_conv_2d_1_256_256_3_20_20_3_1_quant_edgetpu.tflite -i /home/carol/tpu-rad/inputs/input_depthwise_conv_2d_1_256_256_3_20_20_3_1.npy -g /home/carol/tpu-rad/golden/golden_depthwise_conv_2d_1_256_256_3_20_20_3_1.npy --vit -n 1",
+    "codename": "run_conv256",
+    "header": "--model depthwise_conv_2d_1_256_256_3_20_20_3_1_quant_edgetpu.tflite -n 1 --vit"
+  }
+]

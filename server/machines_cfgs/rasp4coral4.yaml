@@ -16,13 +16,13 @@ username: carol
 password: R@diation
 
 # power_switch_ip IP address of the power switch
-power_switch_ip: 192.168.1.100
+power_switch_ip: 192.168.1.120
 
 # power_switch_port outlet of the power switch
-power_switch_port: !!int 4
+power_switch_port: !!int 5
 
 # power_switch_model brand of the power switch
-power_switch_model: default
+power_switch_model: lindy
 
 # The server will wait for this time for the OS booting
 # In seconds
@@ -40,7 +40,8 @@ json_files: [
     #"/home/carol/radiation-setup/machines_cfgs/run_vit_base_8_edgetpu.json",
     #"/home/carol/radiation-setup/machines_cfgs/run_vit_base_16_edgetpu.json",
     #"/home/carol/radiation-setup/machines_cfgs/run_efficient_l3_edgetpu.json",
-    #"/home/carol/radiation-setup/machines_cfgs/run_dleit_fs_hs96_hl3_ah6_is192_im64_ps8_layeredheads_edgetpu.json",
+    #"/home/carol/radiation-setup/machines_cfgs/run_conv1k.json",
+    #"/home/carol/radiation-setup/machines_cfgs/run_simple_conv1k.json",
     #"/home/carol/radiation-setup/machines_cfgs/run_mha_from_image_v8.json",
     #"/home/carol/radiation-setup/machines_cfgs/run_final_block_v8.json",
     #"/home/carol/radiation-setup/machines_cfgs/run_main_block_from_image_v8.json",
